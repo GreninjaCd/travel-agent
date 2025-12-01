@@ -1,41 +1,109 @@
-Travel Agent – Project Overview
+# 🌍 Travel Agent – Project Overview
 
-A multi-agent AI-powered travel planning system built using a Node.js (Express) front-end gateway and a Python-based intelligent agent backend.
+The **Travel Agent** is a multi-agent, AI-powered travel planning system that combines a **Node.js (Express) API gateway** with a **Python-based intelligent agent backend**.  
+It generates personalized travel itineraries using specialized agents, custom tools, and LLM-driven reasoning — all packaged in a **cloud-ready microservice architecture**.
 
-Key Features
+---
 
-Multi-Agent Architecture
-Utilizes dedicated agents for flights, hotels, activities, itinerary refinement, and memory enrichment—each specializing in a different aspect of travel planning.
+## ✨ Key Features
 
-Node.js → Python Orchestration
-The Express server acts as the API entry point and delegates all reasoning to the Python agent system through a high-performance bridge.
+### 🔹 Multi-Agent Architecture
+A coordinated set of specialized agents handle:
+- Flight search  
+- Hotel recommendations  
+- Activity & sightseeing suggestions  
+- Itinerary refinement  
+- Long-term preference learning  
 
-LLM-Powered Travel Reasoning
-Python agents leverage modern LLMs (OpenAI or similar) to generate personalized, multi-day itineraries based on user preferences, constraints, and real-world data.
+Each agent focuses on a single area, enabling modularity and efficient delegation.
 
-Custom Tools & Data Sources
-Includes modular tools for flights, hotels, web search, and activity suggestions. Tools can be extended to integrate real APIs (Skyscanner, Booking, Google Places).
+---
 
-User Preference Memory
-A lightweight memory system stores long-term user preferences (budget range, preferred airlines, hotel types, travel styles) to enhance future planning.
+### 🔹 Node.js → Python Orchestration
+- **Node.js (Express):** Stateless HTTP API layer  
+- **Python:** Executes intelligent reasoning  
+- Lightweight, high-performance bridge connects both layers seamlessly  
 
-Session State Management
-Each travel request creates a structured session capturing agent reasoning steps, enabling traceability, debugging, and conversation continuation.
+---
 
-Context Engineering
-Intelligent compaction of session context ensures efficient and relevant prompts while maintaining performance.
+### 🔹 LLM-Powered Travel Reasoning
+Leverages modern LLMs (e.g., OpenAI models) for:
+- Multi-day itinerary generation  
+- Constraint handling (budget, dates, travel style)  
+- Summarization & personalization  
 
-Observability & Logging
-The agent layer logs key events, tool calls, and reasoning summaries to enable monitoring, auditability, and improvement.
+---
 
-Cloud-Native & Production Ready
-Designed to run as a containerized microservice with clean separation of concerns:
+### 🔹 Custom Tools & Data Sources
+Modular tools offer expandable travel data integrations:
+- Flight search tool  
+- Hotel search tool  
+- Web search tool  
+- Activity recommendation tool  
 
-Node.js as stateless API surface
+Easily extendable to real external APIs like:
+- Skyscanner  
+- Amadeus  
+- Booking.com  
+- Google Places  
 
-Python as stateful agent computation layer
+---
 
-Ready for deployment on Cloud Run or similar platforms
+### 🔹 User Preference Memory
+Stores long-term user preferences such as:
+- Budget ranges  
+- Preferred airlines & cabin types  
+- Hotel star ratings  
+- Activity interests  
 
-High-Level Architecture
-Client → Node.js API → Python Agent Engine → Multi-Agent Tools → Travel Plan Output
+This enables increasingly personalized future travel plans.
+
+---
+
+### 🔹 Session State Management
+Every request generates a session with:
+- Event logs  
+- Agent messages  
+- Tool call traces  
+- Intermediate reasoning steps  
+
+Supports debugging, analytics, and continuity across interactions.
+
+---
+
+### 🔹 Context Engineering
+Uses dynamic context compaction to keep prompts:
+- Efficient  
+- Relevant  
+- LLM-friendly  
+
+Ensures smooth multi-agent cooperation without exceeding context limits.
+
+---
+
+### 🔹 Observability & Logging
+The backend records:
+- Agent actions  
+- Tool usage  
+- Errors & warnings  
+- Timing metrics  
+
+Provides transparency and enables future evaluation & optimization.
+
+---
+
+### 🔹 Cloud-Native & Production Ready
+Architected for deployment as a containerized microservice:
+- **Node.js** → Stateless API layer  
+- **Python** → Stateful agent computation engine  
+
+Supports:
+- Google Cloud Run  
+- Cloud Build  
+- Docker  
+- Secret Manager  
+
+---
+
+## 🏗️ High-Level Architecture
+
