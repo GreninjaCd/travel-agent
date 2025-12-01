@@ -1,0 +1,17 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build','-t','gcr.io/$PROJECT_ID/travel-agent-demo','.']
+
+  # Deploy step: uses gcloud to deploy the image to Cloud Run and bind the OPENAI_API_KEY secret
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        set -e
+        IMAGE=gcr.io/$PROJECT_ID/travel-agent-demo
+        REGION=${_REGION:-us-central1}
+        gcloud run deploy travel-agent-demo --image $IMAGE --region $REGION --platform managed --allow-unauthenticated --set-secrets OPENAI_API_KEY=OPENAI_API_KEY:latest
+
+images:
+  - 'gcr.io/$PROJECT_ID/travel-agent-demo'

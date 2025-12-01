@@ -1,0 +1,6 @@
+{
+  "origin": "JFK",
+  "destination": "LAX",
+  "dates": {"depart": "2025-12-20", "return": "2025-12-27"},
+  "preferences": {"cabin": "economy", "hotel_rating": 4}
+}
