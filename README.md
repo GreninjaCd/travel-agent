@@ -1,84 +1,41 @@
-# Travel Agent
+Travel Agent – Project Overview
 
-Multi-tier travel assistant: Node.js (Express) front-end + Python (FastAPI agents) backend.
+A multi-agent AI-powered travel planning system built using a Node.js (Express) front-end gateway and a Python-based intelligent agent backend.
 
-**Structure:**
-- `src/` - Express server + Python agent client
-- `app/` - Python agents, tools, memory
-- `infra/` - deployment scripts
-- `demo/` - sample requests
+Key Features
 
-**Quick start (local dev)**
+Multi-Agent Architecture
+Utilizes dedicated agents for flights, hotels, activities, itinerary refinement, and memory enrichment—each specializing in a different aspect of travel planning.
 
-```powershell
-# Python venv
-python -m venv .venv; .\.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
+Node.js → Python Orchestration
+The Express server acts as the API entry point and delegates all reasoning to the Python agent system through a high-performance bridge.
 
-# Node deps
-npm install
+LLM-Powered Travel Reasoning
+Python agents leverage modern LLMs (OpenAI or similar) to generate personalized, multi-day itineraries based on user preferences, constraints, and real-world data.
 
-# Run (Node server calls Python CLI)
-npm start
-```
+Custom Tools & Data Sources
+Includes modular tools for flights, hotels, web search, and activity suggestions. Tools can be extended to integrate real APIs (Skyscanner, Booking, Google Places).
 
-Server will listen on `http://localhost:3000`.
+User Preference Memory
+A lightweight memory system stores long-term user preferences (budget range, preferred airlines, hotel types, travel styles) to enhance future planning.
 
-**Test the agent**
+Session State Management
+Each travel request creates a structured session capturing agent reasoning steps, enabling traceability, debugging, and conversation continuation.
 
-```powershell
-curl -X POST http://localhost:3000/api/travel `
-  -H "Content-Type: application/json" `
-  -d '@demo/sample_request.json'
-```
+Context Engineering
+Intelligent compaction of session context ensures efficient and relevant prompts while maintaining performance.
 
-OpenAI notes
- - To enable OpenAI-based summaries set `OPENAI_API_KEY` in your environment or in Cloud Run.
- - Locally, copy `.env.example` to `.env` and set the key, or export the variable before running.
+Observability & Logging
+The agent layer logs key events, tool calls, and reasoning summaries to enable monitoring, auditability, and improvement.
 
-Cloud Run: pass the key to your service via `--set-env-vars OPENAI_API_KEY=YOUR_KEY` when running `gcloud run deploy`.
+Cloud-Native & Production Ready
+Designed to run as a containerized microservice with clean separation of concerns:
 
-**Deploying to Cloud Run (recommended flow with Secret Manager)**
+Node.js as stateless API surface
 
-1. Choose a Google Cloud project and enable APIs:
+Python as stateful agent computation layer
 
-```powershell
-gcloud auth login
-gcloud config set project YOUR_PROJECT_ID
-gcloud services enable cloudbuild.googleapis.com run.googleapis.com secretmanager.googleapis.com
-```
+Ready for deployment on Cloud Run or similar platforms
 
-2. Create a Secret Manager secret containing your OpenAI (or other) key:
-
-```powershell
-# Windows PowerShell
-"sk-..." | gcloud secrets create OPENAI_API_KEY --data-file=- --replication-policy=automatic
-
-# or on Linux/macOS
-# echo "sk-..." | gcloud secrets create OPENAI_API_KEY --data-file=- --replication-policy=automatic
-```
-
-3. Grant the Cloud Build service account access to read the secret (replace PROJECT_ID):
-
-```powershell
-gcloud secrets add-iam-policy-binding OPENAI_API_KEY \
-  --member="serviceAccount:$(gcloud projects describe YOUR_PROJECT_ID --format='value(projectNumber)')@cloudbuild.gserviceaccount.com" \
-  --role='roles/secretmanager.secretAccessor'
-```
-
-4. Build and deploy using the included helper script (bash or PowerShell):
-
-```powershell
-# Bash
-./infra/cloudrun-deploy.sh YOUR_PROJECT_ID us-central1
-
-# PowerShell
-.\infra\deploy.ps1 -ProjectId YOUR_PROJECT_ID -Region us-central1
-```
-
-The helper script will submit a Cloud Build that builds the container and then deploys to Cloud Run, binding the `OPENAI_API_KEY` secret into the runtime.
-
-Notes:
-- The Cloud Build service account must have permission to access the secret (see step 3).
-- In production prefer to use Secret Manager and fine-grained service accounts rather than passing raw keys as `--set-env-vars`.
-- If you want automatic CI/CD, create a Cloud Build trigger that runs on commits to `main` and uses `infra/cloudbuild.yaml`.
+High-Level Architecture
+Client → Node.js API → Python Agent Engine → Multi-Agent Tools → Travel Plan Output
